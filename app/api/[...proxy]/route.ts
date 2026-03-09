@@ -142,28 +142,37 @@ const handleRequest = async (req: NextRequest, pathSegments: string[]): Promise<
     }
 };
 
-export const GET = (req: NextRequest, { params }: { params: { proxy: string[] } }) =>
-    handleRequest(req, params.proxy);
+export async function GET(req: NextRequest, { params }: { params: { proxy: string[] } }) {
+    if (DEBUG) console.log(`[Proxy] GET request to: ${params.proxy.join('/')}`);
+    return handleRequest(req, params.proxy);
+}
 
-export const POST = (req: NextRequest, { params }: { params: { proxy: string[] } }) =>
-    handleRequest(req, params.proxy);
+export async function POST(req: NextRequest, { params }: { params: { proxy: string[] } }) {
+    if (DEBUG) console.log(`[Proxy] POST request to: ${params.proxy.join('/')}`);
+    return handleRequest(req, params.proxy);
+}
 
-export const PUT = (req: NextRequest, { params }: { params: { proxy: string[] } }) =>
-    handleRequest(req, params.proxy);
+export async function PUT(req: NextRequest, { params }: { params: { proxy: string[] } }) {
+    return handleRequest(req, params.proxy);
+}
 
-export const DELETE = (req: NextRequest, { params }: { params: { proxy: string[] } }) =>
-    handleRequest(req, params.proxy);
+export async function DELETE(req: NextRequest, { params }: { params: { proxy: string[] } }) {
+    return handleRequest(req, params.proxy);
+}
 
-export const PATCH = (req: NextRequest, { params }: { params: { proxy: string[] } }) =>
-    handleRequest(req, params.proxy);
+export async function PATCH(req: NextRequest, { params }: { params: { proxy: string[] } }) {
+    return handleRequest(req, params.proxy);
+}
 
-export const OPTIONS = () => new NextResponse(null, {
-    status: 200,
-    headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-API-Key',
-        'Access-Control-Max-Age': '86400',
-        'StakeVladDracula-Router': 'v2.0',
-    },
-});
+export async function OPTIONS() {
+    return new NextResponse(null, {
+        status: 200,
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
+            'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-API-Key',
+            'Access-Control-Max-Age': '86400',
+            'StakeVladDracula-Router': 'v2.0',
+        },
+    });
+}
